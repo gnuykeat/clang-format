@@ -164,7 +164,7 @@ uses the function `buffer-file-name'."
         (default-process-coding-system '(utf-8-unix . utf-8-unix)))
     (unwind-protect
         (let ((status (apply #'tramp-call-process-region
-                             (tramp-dissect-file-name default-directory)
+                             (file-remote-p default-directory)
                              nil nil clang-format-executable
                              nil `(,temp-buffer ,temp-file) nil
                              `("-output-replacements-xml"
