@@ -31,6 +31,7 @@
 
 (require 'cl-lib)
 (require 'xml)
+(require 'tramp)
 
 (defgroup clang-format nil
   "Format code using clang-format."
@@ -162,7 +163,8 @@ uses the function `buffer-file-name'."
         ;; always use ‘utf-8-unix’ and ignore the buffer coding system.
         (default-process-coding-system '(utf-8-unix . utf-8-unix)))
     (unwind-protect
-        (let ((status (apply #'call-process-region
+        (let ((status (apply #'tramp-call-process-region
+                             (tramp-dissect-file-name default-directory)
                              nil nil clang-format-executable
                              nil `(,temp-buffer ,temp-file) nil
                              `("-output-replacements-xml"
